@@ -1,1 +1,28 @@
-
+class Singleton:
+    _instance = None
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._initialized = False
+        return cls._instance
+    
+    def __init__(self):
+        if not self._initialized:
+            self._data = []
+            self._initialized = True
+    
+    @classmethod
+    def get_instance(cls):
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
+    
+    def some_method(self):
+        return f"Singleton instance at {id(self)}"
+    
+    def add_data(self, item):
+        self._data.append(item)
+    
+    def get_data(self):
+        return self._data.copy()
