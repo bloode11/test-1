@@ -1,1 +1,35 @@
+from abc import ABC, abstractmethod
 
+class SortingStrategy(ABC):
+    @abstractmethod
+    def sort(self, array: list[int]):
+        pass
+
+class BubbleSortStrategy(SortingStrategy):
+    def sort(self, array: list[int]):
+        print("Sorting using Bubble Sort")
+
+class QuickSortStrategy(SortingStrategy):
+    def sort(self, array: list[int]):
+        print("Sorting using Quick Sort")
+
+class Sorter:
+    def __init__(self):
+        self.strategy = None
+    
+    def set_strategy(self, strategy: SortingStrategy):
+        self.strategy = strategy
+    
+    def sort_array(self, array: list[int]):
+        self.strategy.sort(array)
+
+if __name__ == "__main__":
+    sorter = Sorter()
+    
+    sorter.set_strategy(BubbleSortStrategy())
+    array1 = [5, 3, 8, 4, 2]
+    sorter.sort_array(array1)
+    
+    sorter.set_strategy(QuickSortStrategy())
+    array2 = [5, 3, 8, 4, 2]
+    sorter.sort_array(array2)
