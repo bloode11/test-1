@@ -1,1 +1,25 @@
+from typing import TypeVar, Generic
 
+T = TypeVar('T')
+
+class Iterator(Generic[T]):
+    def has_next(self) -> bool:
+        pass
+    
+    def next(self) -> T:
+        pass
+
+class ArrayIterator(Iterator[T]):
+    def __init__(self, items: list[T]):
+        self.items = items
+        self.position = 0
+    
+    def has_next(self) -> bool:
+        return self.position < len(self.items)
+    
+    def next(self) -> T:
+        if self.has_next():
+            item = self.items[self.position]
+            self.position += 1
+            return item
+        raise IndexError("No more elements in iterator")
