@@ -1,1 +1,31 @@
+from abc import ABC, abstractmethod
 
+class Logger(ABC):
+    @abstractmethod
+    def log(self, message: str):
+        pass
+
+class FileLogger(Logger):
+    def log(self, message: str):
+        print(f"Logging to file: {message}")
+
+class ConsoleLogger(Logger):
+    def log(self, message: str):
+        print(f"Logging to console: {message}")
+
+class LoggerFactory(ABC):
+    @abstractmethod
+    def create_logger(self) -> Logger:
+        pass
+    
+    def log_message(self, message: str):
+        logger = self.create_logger()
+        logger.log(message)
+
+class FileLoggerFactory(LoggerFactory):
+    def create_logger(self) -> Logger:
+        return FileLogger()
+
+class ConsoleLoggerFactory(LoggerFactory):
+    def create_logger(self) -> Logger:
+        return ConsoleLogger()
